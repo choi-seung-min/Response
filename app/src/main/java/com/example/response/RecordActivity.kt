@@ -4,32 +4,38 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_records.*
 
+var arr : ArrayList<Double> = ArrayList()
+
 class RecordActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_records)
-        var rec = intent.getDoubleArrayExtra("records")
-        records(rec)
+//        var bundle : Bundle = intent.getBundleExtra("bundle")
+//        var rec : ArrayList<Double> = bundle.getDoubleArray("records")
+//        var intent : Intent = intent
+        var rec : Double = intent.getDoubleExtra("rec", 0.0)
+        arr.add(rec)
         //TODO: rec is null. why?
+        setText(arr)
     }
 
-    fun records(rec : DoubleArray){
+    fun setText(rec : ArrayList<Double>){
         rec.sort()
 
-        if (rec[0] != null){
-            textView1.text = "1. ${rec[0]}"
+        if (rec.size > 1){
+            textView1.text = "1. ${rec[0]}sec"
         }
-        if (rec[1] != null){
-            textView2.text = "1. ${rec[1]}"
+        if (rec.size > 2){
+            textView2.text = "1. ${rec[1]}sec"
         }
-        if (rec[2] != null){
-            textView3.text = "1. ${rec[2]}"
+        if (rec.size > 3){
+            textView3.text = "1. ${rec[2]}sec"
         }
-        if (rec[3] != null){
-            textView4.text = "1. ${rec[3]}"
+        if (rec.size > 4){
+            textView4.text = "1. ${rec[3]}sec"
         }
-        if (rec[4] != null){
-            textView5.text = "1. ${rec[4]}"
+        if (rec.size > 5){
+            textView5.text = "1. ${rec[4]}sec"
         }
     }
 }
