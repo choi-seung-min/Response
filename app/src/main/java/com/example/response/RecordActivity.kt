@@ -13,9 +13,9 @@ class RecordActivity : AppCompatActivity(){
 //        var bundle : Bundle = intent.getBundleExtra("bundle")
 //        var rec : ArrayList<Double> = bundle.getDoubleArray("records")
 //        var intent : Intent = intent
-        var rec : Double = intent.getDoubleExtra("rec", 0.0)
+        var rec : Double = intent.getDoubleExtra("rec", 99.999)
+        //TODO: rec have nothing so i get 99.999
         arr.add(rec)
-        //TODO: rec is null. why?
         setText(arr)
     }
 
