@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
     val RED: Int = 0xFF2800
     var userTimeStart: Long = 0
     var userTimeEnd: Long = 0
-    var flag : Boolean = false
-    //flag == check if color is changed
+    var start: Boolean = false
+    //start == check if start button is clicked
     var mTimer = Timer()
 
 
@@ -27,32 +27,33 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonStart.setOnClickListener {
-            Thread.sleep(nextInt(3, 6)*1000.toLong())
-//            mTimer.schedule(Custom(), nextInt(3,6)*1000.toLong())
-            imageView.setColorFilter(Color.GREEN)
-            userTimeStart = System.currentTimeMillis()
-//            time(responseStart())
+            response.text = "Response"
+//            Thread.sleep(nextInt(3, 6) * 1000.toLong())
+            mTimer.schedule(Custom(), nextInt(3, 6) * 1000.toLong())
+//            imageView.setColorFilter(Color.GREEN)
+//            userTimeStart = System.currentTimeMillis()
+            start = true
         }
 
         imageView.setOnClickListener {
-            if(!flag){
+            if (start) {
                 imageView.setColorFilter(RED)
                 userTimeEnd = System.currentTimeMillis()
 
-                if (userTimeStart != 0.toLong() && userTimeEnd != 0.toLong())
+                if (userTimeStart != 0.toLong() && userTimeEnd != 0.toLong()) {
                     response.text = "기록: ${(userTimeEnd - userTimeStart) / 1000.0}"
-                else
+                    start = false
+                } else {
                     response.text = "Response"
-
+                }
                 userTimeStart = 0
                 userTimeEnd = 0
-                flag = false
-            } else{
-                response.text = "너무 빠릅니다.\n다시 시작해주세요"
-                flag = false
+            } else {
+                response.text = "start를 누르세요."
             }
         }
     }
+
 
 //    fun responseStart(): Boolean {
 //        if (!flag){
@@ -75,8 +76,8 @@ class MainActivity : AppCompatActivity() {
 
     inner class Custom : TimerTask() {
         override fun run() {
-            flag = true
             imageView.setColorFilter(Color.GREEN)
+            userTimeStart = System.currentTimeMillis()
         }
     }
 }
