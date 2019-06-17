@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val intent = Intent(this, RecordActivity::class.java)
 
         rank.setOnClickListener {
-            val intent = Intent(this, RecordActivity::class.java)
             startActivity(intent)
         }
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 if (userTimeStart != 0.toLong() && userTimeEnd != 0.toLong()) {
                     userRec = (userTimeEnd - userTimeStart) / 1000.0
                     response.text = "기록: $userRec"
-                    intent.putExtra("rec", userRec)
+                    intent.putExtra("userRec", userRec)
                     start = false
                 } else {
                     response.text = "Response"
