@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.random.Random.Default.nextInt
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +18,14 @@ class MainActivity : AppCompatActivity() {
     //start == check if start button is clicked
     var mTimer = Timer()
     var userRec : Double = 0.0
+    var scoreArr : ArrayList<Double> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val intent = Intent(this, RecordActivity::class.java)
+//TODO intent will give array of score
 
         rank.setOnClickListener {
             startActivity(intent)
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         buttonStart.setOnClickListener {
             response.text = "Response"
             mTimer.schedule(GameStart(), nextInt(3, 6) * 1000.toLong())
+            //TODO add flag to not allow user to touch color view before color changed
             start = true
         }
 
@@ -42,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                 if (userTimeStart != 0.toLong() && userTimeEnd != 0.toLong()) {
                     userRec = (userTimeEnd - userTimeStart) / 1000.0
                     response.text = "기록: $userRec"
+                    scoreArr.add(userRec)
                     intent.putExtra("userRec", userRec)
                     start = false
                 } else {
