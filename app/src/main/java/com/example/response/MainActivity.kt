@@ -17,38 +17,46 @@ class MainActivity : AppCompatActivity() {
     var start: Boolean = false
     //start == check if start button is clicked
     var mTimer = Timer()
-    var userRec : Double = 0.0
-    var scoreArr : ArrayList<Double> = ArrayList()
+    var userRec: Double = 0.0
+    var scoreArr: ArrayList<Double> = ArrayList()
+    var foulCheck: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val intent = Intent(this, RecordActivity::class.java)
-//TODO intent will give array of score
+        //TODO intent will give array of score
 
         rank.setOnClickListener {
             startActivity(intent)
         }
 
         buttonStart.setOnClickListener {
+            response.textSize = 30f
             response.text = "Response"
+            foulCheck = true
             mTimer.schedule(GameStart(), nextInt(3, 6) * 1000.toLong())
             //TODO add flag to not allow user to touch color view before color changed
             start = true
         }
 
         imageView.setOnClickListener {
+            response.textSize = 30f
             if (start) {
                 imageView.setColorFilter(RED)
                 userTimeEnd = System.currentTimeMillis()
 
-                if (userTimeStart != 0.toLong() && userTimeEnd != 0.toLong()) {
+                if (userTimeStart != 0.toLong() && userTimeEnd != 0.toLong() && !foulCheck) {
                     userRec = (userTimeEnd - userTimeStart) / 1000.0
                     response.text = "기록: $userRec"
                     scoreArr.add(userRec)
                     intent.putExtra("userRec", userRec)
                     start = false
+                } else if (foulCheck) {
+                    response.textSize = 20f
+                    response.text = "너무 빨리 눌렀습니다.\n다시 시작하세요."
+                    foulCheck = false
                 } else {
                     response.text = "Response"
                 }
@@ -60,30 +68,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-//    fun responseStart(): Boolean {
-//        if (!flag){
-//            var mTimer = Timer()
-//            mTimer.schedule(Custom(), nextInt(3, 6) * 1000.toLong())
-////        imageView.setColorFilter(Color.GREEN)
-//            return true
-//        }
-//        else {
-//            return false
-//        }
-//    }
-
-//    fun time(check: Boolean) {
-//        if (!check)
-//            response.text = "너무 빠릅니다, 다시 시작하세요"
-//        else
-//            userTimeStart = System.currentTimeMillis()
-//    }
-
     inner class GameStart : TimerTask() {
         override fun run() {
-            imageView.setColorFilter(Color.GREEN)
-            userTimeStart = System.currentTimeMillis()
+            if (foulCheck) {
+                foulCheck = false
+                imageView.setColorFilter(Color.GREEN)
+                userTimeStart = System.currentTimeMillis()
+            }
         }
     }
 }
