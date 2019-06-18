@@ -4,20 +4,23 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_records.*
 
-var arr : ArrayList<Double> = ArrayList()
-
 class RecordActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_records)
-        var rec : Double = intent.getDoubleExtra("userRec", 0.0)
+
         var score : ArrayList<String> = intent.getStringArrayListExtra("scoreArr")
         var set : ArrayList<Double> = ArrayList()
+
         for(s : String in score){
             set.add(s.toDouble())
         }
-        arr.add(rec)
+
         setText(set)
+
+        buttonBack.setOnClickListener {
+            finish()
+        }
     }
 
     fun setText(rec : ArrayList<Double>){
