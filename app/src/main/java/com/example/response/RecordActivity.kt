@@ -14,11 +14,12 @@ class RecordActivity : AppCompatActivity(){
 //        var rec : ArrayList<Double> = bundle.getDoubleArray("records")
 //        var intent : Intent = intent
         var rec : Double = intent.getDoubleExtra("userRec", 0.0)
+        var score : DoubleArray = intent.getDoubleArrayExtra("scoreArr")
         arr.add(rec)
-        setText(arr)
+        setText(score)
     }
 
-    fun setText(rec : ArrayList<Double>){
+    fun setText(rec : DoubleArray){
         rec.sort()
 
         if (rec.size > 1){

@@ -2,8 +2,9 @@ package com.example.response
 
 import android.content.Intent
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     //start == check if start button is clicked
     var mTimer = Timer()
     var userRec: Double = 0.0
-    var scoreArr: ArrayList<Double> = ArrayList()
+    var scoreArr = ArrayList<Double>()
     var foulCheck: Boolean = false
 
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         //TODO intent will give array of score
 
         rank.setOnClickListener {
+            intent.putExtra("scoreArr", scoreArr)
             startActivity(intent)
         }
 
@@ -37,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             response.text = "Response"
             foulCheck = true
             mTimer.schedule(GameStart(), nextInt(3, 6) * 1000.toLong())
-            //TODO add flag to not allow user to touch color view before color changed
             start = true
         }
 
@@ -51,7 +52,8 @@ class MainActivity : AppCompatActivity() {
                     userRec = (userTimeEnd - userTimeStart) / 1000.0
                     response.text = "기록: $userRec"
                     scoreArr.add(userRec)
-                    intent.putExtra("userRec", userRec)
+//                    intent.putExtra("userRec", userRec)
+//                    intent.putExtra("scoreArr", scoreArr)
                     start = false
                 } else if (foulCheck) {
                     response.textSize = 20f
@@ -66,6 +68,10 @@ class MainActivity : AppCompatActivity() {
                 response.text = "start를 누르세요."
             }
         }
+    }
+
+    fun onClick(v : View){
+        response.textSize = 30f
     }
 
     inner class GameStart : TimerTask() {
