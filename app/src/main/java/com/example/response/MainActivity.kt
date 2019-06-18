@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity() {
     //start == check if start button is clicked
     var mTimer = Timer()
     var userRec: Double = 0.0
-    var scoreArr = ArrayList<Double>()
+    var scoreArr = ArrayList<String>()
+    //ArrayList<Double> got problem when RecordActivity get intent
+    //ArrayList is not empty or null, but RecordActivity gets null
     var foulCheck: Boolean = false
 
 
@@ -27,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val intent = Intent(this, RecordActivity::class.java)
-        //TODO intent will give array of score
 
         rank.setOnClickListener {
             intent.putExtra("scoreArr", scoreArr)
@@ -51,9 +52,7 @@ class MainActivity : AppCompatActivity() {
                 if (userTimeStart != 0.toLong() && userTimeEnd != 0.toLong() && !foulCheck) {
                     userRec = (userTimeEnd - userTimeStart) / 1000.0
                     response.text = "기록: $userRec"
-                    scoreArr.add(userRec)
-//                    intent.putExtra("userRec", userRec)
-//                    intent.putExtra("scoreArr", scoreArr)
+                    scoreArr.add(userRec.toString())
                     start = false
                 } else if (foulCheck) {
                     response.textSize = 20f

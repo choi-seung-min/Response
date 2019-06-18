@@ -10,32 +10,33 @@ class RecordActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_records)
-//        var bundle : Bundle = intent.getBundleExtra("bundle")
-//        var rec : ArrayList<Double> = bundle.getDoubleArray("records")
-//        var intent : Intent = intent
         var rec : Double = intent.getDoubleExtra("userRec", 0.0)
-        var score : DoubleArray = intent.getDoubleArrayExtra("scoreArr")
+        var score : ArrayList<String> = intent.getStringArrayListExtra("scoreArr")
+        var set : ArrayList<Double> = ArrayList()
+        for(s : String in score){
+            set.add(s.toDouble())
+        }
         arr.add(rec)
-        setText(score)
+        setText(set)
     }
 
-    fun setText(rec : DoubleArray){
+    fun setText(rec : ArrayList<Double>){
         rec.sort()
 
+        if (rec.size > 0){
+            textView1.text = "1: ${rec[0]}sec"
+        }
         if (rec.size > 1){
-            textView1.text = "1. ${rec[0]}sec"
+            textView2.text = "2: ${rec[1]}sec"
         }
         if (rec.size > 2){
-            textView2.text = "1. ${rec[1]}sec"
+            textView3.text = "3: ${rec[2]}sec"
         }
         if (rec.size > 3){
-            textView3.text = "1. ${rec[2]}sec"
+            textView4.text = "4: ${rec[3]}sec"
         }
         if (rec.size > 4){
-            textView4.text = "1. ${rec[3]}sec"
-        }
-        if (rec.size > 5){
-            textView5.text = "1. ${rec[4]}sec"
+            textView5.text = "5: ${rec[4]}sec"
         }
     }
 }
