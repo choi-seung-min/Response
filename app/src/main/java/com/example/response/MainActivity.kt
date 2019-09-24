@@ -3,15 +3,16 @@ package com.example.response
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.takusemba.spotlight.Spotlight
 import com.takusemba.spotlight.shape.Circle
 import com.takusemba.spotlight.target.SimpleTarget
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random.Default.nextInt
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     //ArrayList is not empty or null, but RecordActivity gets null
     var foulCheck: Boolean = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,41 +38,45 @@ class MainActivity : AppCompatActivity() {
 
         val imageView = findViewById<ImageView>(R.id.imageView)
         val imageLocation = IntArray(2)
-        imageView.getLocationInWindow(imageLocation)
-        val imageX = imageLocation[0] + imageView.width / 2f
+        imageView.getLocationOnScreen(imageLocation)
+        //getLocationInWindow returns 0
+        //TODO: fix it
+        val imageX = imageLocation[0] + imageView.width  / 2f
         val imageY = imageLocation[1] + imageView.height / 2f
-        val imageRadious = 100f
+        val imageRadius = 100f
 
-        val firstTatget = SimpleTarget.Builder(this)
+        val firstTarget = SimpleTarget.Builder(this@MainActivity)
             .setPoint(imageX, imageY)
-            .setShape(Circle(imageRadious))
-            .setTitle("First title")
-            .setDescription("First description")
-            .setOverlayPoint(100f, imageY + imageRadious + 100f)
+            .setShape(Circle(imageRadius))
+            .setTitle("Response!")
+            .setDescription("After you click start button, the color will change.\nTouch this as fast as possible you can!")
+            .setOverlayPoint(100f, imageX + imageRadius + 100f)
             .build()
 
-        val startButton = findViewById<Button>(R.id.buttonStart)
+        val buttonStart = findViewById<Button>(R.id.buttonStart)
         val sbLocation = IntArray(2)
-        startButton.getLocationInWindow(sbLocation)
-        val startX = sbLocation[0] + startButton.width / 2f
-        val startY = sbLocation[1] + startButton.height / 2f
-        val startRadious = 100f
+        buttonStart.getLocationOnScreen(sbLocation)
+        val startX = sbLocation[0] + buttonStart.width / 2f
+        val startY = sbLocation[1] + buttonStart.height / 2f
+        val startRadius = 100f
 
-        val secondTarget = SimpleTarget.Builder(this)
+        val secondTarget = SimpleTarget.Builder(this@MainActivity)
             .setPoint(startX, startY)
-            .setShape(Circle(startRadious))
-            .setTitle("Second Title")
-            .setDescription("Second describtion")
-            .setOverlayPoint(100f, startY + startRadious + 100f)
+            .setShape(Circle(startRadius))
+            .setTitle("Start Button")
+            .setDescription("This is start button.\nDo ypu want to know how fast you are?\nCome on!")
+            .setOverlayPoint(100f, startY + startRadius + 100f)
             .build()
 
-        Spotlight.with(this)
-            .setOverlayColor(R.color.background)
-            .setDuration(1000L)
-            .setAnimation(DecelerateInterpolator(2f))
-            .setTargets(firstTatget, secondTarget)
-            .setClosedOnTouchedOutside(true)
-            .start()
+        textView.setOnClickListener{
+            Spotlight.with(this)
+                .setOverlayColor(R.color.background)
+                .setDuration(1000L)
+                .setAnimation(DecelerateInterpolator(2f))
+                .setTargets(firstTarget, secondTarget)
+                .setClosedOnTouchedOutside(true)
+                .start()
+        }
 
         rank.setOnClickListener {
             intent.putExtra("scoreArr", scoreArr)
@@ -114,7 +118,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClick(v : View){
-        response.textSize = 30f
+        v.response.textSize = 30f
     }
 
     inner class GameStart : TimerTask() {
