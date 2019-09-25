@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 .setShape(Circle(startRadius))
                 .setTitle("Start Button")
                 .setDescription("This is start button.\nDo you want to know how fast you are?\nCome on!")
-                .setOverlayPoint(100f, startY + startRadius + 100f)
+                .setOverlayPoint(100f, startY + startRadius - 1000f)
                 .build()
             //overlay point might be the problem
 
