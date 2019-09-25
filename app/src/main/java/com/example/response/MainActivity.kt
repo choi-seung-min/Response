@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val intent = Intent(this, RecordActivity::class.java)
 
-        textView.setOnClickListener{
+        textViewHelp.setOnClickListener{
             val imageView = findViewById<ImageView>(R.id.imageView)
             val imageLocation = IntArray(2)
             imageView.getLocationInWindow(imageLocation)
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 .setPoint(imageX, imageY)
                 .setShape(Circle(imageRadius))
                 .setTitle("Response!")
-                .setDescription("After you click start button, the color will change.\nTouch this as fast as possible you can!")
+                .setDescription("After you click start button,\n the color will change.\nTouch this as fast as possible you can!")
                 .setOverlayPoint(100f, imageY + imageRadius + 100f)
                 .build()
 
