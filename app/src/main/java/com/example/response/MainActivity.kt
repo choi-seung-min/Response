@@ -36,39 +36,38 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val intent = Intent(this, RecordActivity::class.java)
 
-        val imageView = findViewById<ImageView>(R.id.imageView)
-        val imageLocation = IntArray(2)
-        imageView.getLocationOnScreen(imageLocation)
-        //getLocationInWindow returns 0
-        //TODO: fix it
-        val imageX = imageLocation[0] + imageView.width  / 2f
-        val imageY = imageLocation[1] + imageView.height / 2f
-        val imageRadius = 100f
-
-        val firstTarget = SimpleTarget.Builder(this@MainActivity)
-            .setPoint(imageX, imageY)
-            .setShape(Circle(imageRadius))
-            .setTitle("Response!")
-            .setDescription("After you click start button, the color will change.\nTouch this as fast as possible you can!")
-            .setOverlayPoint(100f, imageX + imageRadius + 100f)
-            .build()
-
-        val buttonStart = findViewById<Button>(R.id.buttonStart)
-        val sbLocation = IntArray(2)
-        buttonStart.getLocationOnScreen(sbLocation)
-        val startX = sbLocation[0] + buttonStart.width / 2f
-        val startY = sbLocation[1] + buttonStart.height / 2f
-        val startRadius = 100f
-
-        val secondTarget = SimpleTarget.Builder(this@MainActivity)
-            .setPoint(startX, startY)
-            .setShape(Circle(startRadius))
-            .setTitle("Start Button")
-            .setDescription("This is start button.\nDo ypu want to know how fast you are?\nCome on!")
-            .setOverlayPoint(100f, startY + startRadius + 100f)
-            .build()
-
         textView.setOnClickListener{
+            val imageView = findViewById<ImageView>(R.id.imageView)
+            val imageLocation = IntArray(2)
+            imageView.getLocationInWindow(imageLocation)
+            val imageX = imageLocation[0] + imageView.width  / 2f
+            val imageY = imageLocation[1] + imageView.height / 2f
+            val imageRadius = 500f
+
+            val firstTarget = SimpleTarget.Builder(this@MainActivity)
+                .setPoint(imageX, imageY)
+                .setShape(Circle(imageRadius))
+                .setTitle("Response!")
+                .setDescription("After you click start button, the color will change.\nTouch this as fast as possible you can!")
+                .setOverlayPoint(100f, imageY + imageRadius + 100f)
+                .build()
+
+            val buttonStart = findViewById<Button>(R.id.buttonStart)
+            val sbLocation = IntArray(2)
+            buttonStart.getLocationOnScreen(sbLocation)
+            val startX = sbLocation[0] + buttonStart.width / 2f
+            val startY = sbLocation[1] + buttonStart.height / 2f
+            val startRadius = 300f
+
+            val secondTarget = SimpleTarget.Builder(this@MainActivity)
+                .setPoint(startX, startY)
+                .setShape(Circle(startRadius))
+                .setTitle("Start Button")
+                .setDescription("This is start button.\nDo you want to know how fast you are?\nCome on!")
+                .setOverlayPoint(100f, startY + startRadius + 100f)
+                .build()
+            //overlay point might be the problem
+
             Spotlight.with(this)
                 .setOverlayColor(R.color.background)
                 .setDuration(1000L)
